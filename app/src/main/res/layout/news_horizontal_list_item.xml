@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/news_card_corner_radius"
+    app:elevation="@dimen/news_card_elevation">
+
+    <LinearLayout
+        android:layout_width="@dimen/news_card_width"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/banner"
+            android:layout_width="@dimen/banner_width"
+            android:layout_height="@dimen/banner_height"
+            android:scaleType="fitXY"/>
+
+
+        <TextView
+            android:id="@+id/news_title"
+            style="@style/TextView.Medium.Grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="center"
+            android:maxLines="2"
+            tools:text="News Fedds Titles" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

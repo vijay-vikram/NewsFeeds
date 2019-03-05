@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/box_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context="com.newsfeeds.home.views.HomeActivity">
 
+
     <TextView
+        android:id="@+id/title_business"
+        style="@style/TextView.XLarge.Black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world"/>
+        android:text="@string/news_title_business"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <ProgressBar
+        android:id="@+id/business_news_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/business_news_list"
+        app:layout_constraintBottom_toBottomOf="@+id/business_news_list"
+        app:layout_constraintStart_toStartOf="@id/business_news_list"
+        app:layout_constraintEnd_toEndOf="@id/business_news_list"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/business_news_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/title_business"
+        android:layout_marginTop="@dimen/margin_large" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

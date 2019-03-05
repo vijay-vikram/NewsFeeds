@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="box_layout">
+        <item name="android:paddingLeft">@dimen/padding_large</item>
+        <item name="android:paddingRight">@dimen/padding_large</item>
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
+    </style>
+
+
+    <style name="TextView.XLarge" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_xlarge</item>
+    </style>
+
+    <style name="TextView.Medium" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="TextView.XLarge.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextView.Medium.Grey">
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+
+</resources>
+
+
