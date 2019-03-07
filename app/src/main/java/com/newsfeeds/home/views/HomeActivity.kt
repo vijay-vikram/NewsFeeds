@@ -19,7 +19,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        HomePresenter().initialize(this)
+        HomePresenter(this, this).initialize()
 
     }
 
