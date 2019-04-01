@@ -15,12 +15,15 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(), HomeActivityContract {
 
+    private val presenter by lazy {
+        HomePresenter(this, this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        HomePresenter(this, this).initialize()
-
+        lifecycle.addObserver(presenter)
     }
 
     override fun renderHeadlinesForBusiness(articleList: List<Article>) {
@@ -38,6 +41,12 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract {
 
     override fun hideBusinessNewsProgressBar() {
         business_news_progress_bar.visibility = View.GONE
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycle.removeObserver(presenter)
     }
 
 }

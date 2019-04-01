@@ -14,7 +14,7 @@ data class Article(@PrimaryKey(autoGenerate = true) var id: Long,
                    @ColumnInfo(name = COLUMN_URL) @SerializedName("url") val url: String,
                    @ColumnInfo(name = COLUMN_URL_TO_IMAGE) @SerializedName("urlToImage") val imageUrl: String,
                    @ColumnInfo(name = COLUMN_PUBLISHED_AT) @SerializedName("publishedAt") val publishedAt: String,
-                   @ColumnInfo(name = COLUMN_CONTENT) @SerializedName("content") val content: String,
+                   @ColumnInfo(name = COLUMN_CONTENT) @SerializedName("content") val content: String?,
                    @ColumnInfo(name = COLUMN_CATEGORY) var category: Int) {
 
     companion object Contract {

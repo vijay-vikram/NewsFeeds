@@ -2,13 +2,17 @@ package com.newsfeeds.home.presenter
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.newsfeeds.home.contract.HomeActivityContract
 import com.newsfeeds.home.repositories.HomeRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 
-class HomePresenter(private val view: HomeActivityContract, private val context: Context) {
+class HomePresenter(private val view: HomeActivityContract, private val context: Context) : LifecycleObserver {
 
-    fun initialize() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onCreate() {
         val disposable = HomeRepository(context).fetchHeadlinesForBusiness()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
