@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 class HomeActivity : AppCompatActivity(), HomeActivityContract {
 
     private val presenter by lazy {
-        HomePresenter(this, this)
+        HomePresenter(this, this, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

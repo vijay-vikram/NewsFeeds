@@ -1,6 +1,7 @@
 package com.newsfeeds.home.repositories
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.newsfeeds.database.NewsFeedsDatabase
 import com.newsfeeds.network.NetworkFactory
@@ -10,6 +11,8 @@ import com.newsfeeds.network.enums.Status
 import com.newsfeeds.network.models.Article
 import com.newsfeeds.network.webservices.NewsFeedsWebService
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class HomeRepository(private val context: Context) {
@@ -21,9 +24,16 @@ class HomeRepository(private val context: Context) {
             .build()
             .newsFeedsDao()
 
-    fun fetchHeadlinesForBusiness(): Single<List<Article>> {
+
+    fun fetchHeadlinesForBusinessFromDB(): LiveData<List<Article>> {
+        fetchHeadlinesForBusiness()
+       return newsFeedsDao.fetchHeadlinesForBusiness()
+    }
+
+    private fun fetchHeadlinesForBusiness(): Disposable {
         return newsFeedsWebService.getHeadLineFor(BUSINESS.toString(), INDIA.toString())
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .map { topHeadlinesResponse ->
                     topHeadlinesResponse.articleList.forEach {
                         it.category = BUSINESS.getId()
@@ -33,12 +43,7 @@ class HomeRepository(private val context: Context) {
                 .doOnSuccess {
                     newsFeedsDao.insertAll(it.articleList)
                 }
-                .flatMap {
-                    if (it.status == Status.OK.toString())
-                        Single.just(it.articleList)
-                    else
-                        Single.error(Throwable(it.message))
-                }
+                .subscribe({}, {})
     }
 }
 

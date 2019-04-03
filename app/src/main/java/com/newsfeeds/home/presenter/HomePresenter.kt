@@ -1,38 +1,33 @@
 package com.newsfeeds.home.presenter
 
 import android.content.Context
-import android.util.Log
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.newsfeeds.home.contract.HomeActivityContract
 import com.newsfeeds.home.repositories.HomeRepository
+import com.newsfeeds.home.views.HomeActivity
+import com.newsfeeds.network.models.Article
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
-class HomePresenter(private val view: HomeActivityContract, private val context: Context) : LifecycleObserver {
+class HomePresenter(private val view: HomeActivityContract, private val context: Context, private val homeActivity: HomeActivity) : LifecycleObserver {
 
-    private var disposable: Disposable? = null
+    private var homeRepository = HomeRepository(context)
+    private lateinit var businessHeadlinesList: LiveData<List<Article>>
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun onCreate() {
-        disposable = HomeRepository(context).fetchHeadlinesForBusiness()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {
-                    view.showBussinessNewsProgressBar()
-                }.doOnEvent { _, _ ->
-                    view.hideBusinessNewsProgressBar()
-                }
-                .subscribe({
-                    view.renderHeadlinesForBusiness(it)
-                }, {
-                })
+    fun onRender() {
 
+        businessHeadlinesList = homeRepository.fetchHeadlinesForBusinessFromDB()
+        setObserver()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
-        disposable?.dispose()
+    private fun setObserver() {
+        businessHeadlinesList.observe(homeActivity, Observer<List<Article>> {
+            if (!it.isEmpty()) {
+                view.hideBusinessNewsProgressBar()
+                view.renderHeadlinesForBusiness(it)
+            }
+        })
     }
 
 }
