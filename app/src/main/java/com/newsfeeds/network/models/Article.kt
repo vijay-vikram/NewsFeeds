@@ -2,11 +2,14 @@ package com.newsfeeds.network.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.newsfeeds.network.models.Article.Contract.COLUMN_DESCRIPTION
+import com.newsfeeds.network.models.Article.Contract.COLUMN_PUBLISHED_AT
 import com.newsfeeds.network.models.Article.Contract.TABLE_NAME
 
-@Entity(tableName = TABLE_NAME)
+@Entity(tableName = TABLE_NAME, indices = arrayOf(Index(value = [COLUMN_DESCRIPTION, COLUMN_PUBLISHED_AT], unique = true)))
 data class Article(@PrimaryKey(autoGenerate = true) var id: Long,
                    @ColumnInfo(name = COLUMN_AUTHOR) @SerializedName("author") var authorName: String?,
                    @ColumnInfo(name = COLUMN_TITLE) @SerializedName("title") val title: String,

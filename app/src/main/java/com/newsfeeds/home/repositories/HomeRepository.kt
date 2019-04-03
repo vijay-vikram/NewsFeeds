@@ -7,11 +7,8 @@ import com.newsfeeds.database.NewsFeedsDatabase
 import com.newsfeeds.network.NetworkFactory
 import com.newsfeeds.network.enums.News.Category.BUSINESS
 import com.newsfeeds.network.enums.News.Country.INDIA
-import com.newsfeeds.network.enums.Status
 import com.newsfeeds.network.models.Article
 import com.newsfeeds.network.webservices.NewsFeedsWebService
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
@@ -27,7 +24,7 @@ class HomeRepository(private val context: Context) {
 
     fun fetchHeadlinesForBusinessFromDB(): LiveData<List<Article>> {
         fetchHeadlinesForBusiness()
-       return newsFeedsDao.fetchHeadlinesForBusiness()
+       return newsFeedsDao.fetchHeadlinesFor(BUSINESS.getId())
     }
 
     private fun fetchHeadlinesForBusiness(): Disposable {
